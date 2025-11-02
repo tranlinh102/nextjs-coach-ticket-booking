@@ -1,33 +1,34 @@
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
+// middleware.ts
 
-export default withAuth(
-  function middleware(req) {
-    const token = req.nextauth.token;
-    const path = req.nextUrl.pathname;
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-    // Get user roles
-    const roles = (token?.roles as string[]) || [];
-    const isStaff = roles.includes("staff");
+// Yêu cầu 4: Hàm middleware
+export function middleware(request: NextRequest) {
+  
+  // Lấy giá trị của query param 'password' từ URL
+  const password = request.nextUrl.searchParams.get('password');
 
-    // If accessing dashboard routes
-    if (path.startsWith("/dashboard")) {
-      // Only staff can access dashboard
-      if (!isStaff) {
-        return NextResponse.redirect(new URL("/", req.url));
-      }
-    }
-
-    // Allow access
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
+  // Yêu cầu 5: Kiểm tra logic
+  // Nếu password KHÔNG BẰNG '123456'
+  if (password !== '123456') {
+    
+    // Tạo một URL mới trỏ về trang chủ (/)
+    const homeUrl = new URL('/', request.url);
+    
+    // Trả về một phản hồi (Response) yêu cầu trình duyệt
+    // chuyển hướng (redirect) về trang chủ
+    return NextResponse.redirect(homeUrl);
   }
-);
 
+  // Yêu cầu 6: Nếu password ĐÚNG
+  // Cho phép request đi tiếp đến trang /dashboard
+  return NextResponse.next();
+}
+
+// Yêu cầu 3: Cấu hình Matcher
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  // Middleware này sẽ CHỈ CHẠY cho các request
+  // đến đường dẫn (pathname) là '/dashboard'
+  matcher: '/dashboard',
 };
