@@ -111,7 +111,7 @@ export const authOptions: AuthOptions = {
         try {
           const params = new URLSearchParams({
             id_token_hint: token.idToken as string,
-            post_logout_redirect_uri: process.env.AUTH_URL || "http://localhost:3000",
+            post_logout_redirect_uri: process.env.AUTH_URL || "http://localhost:4000",
           });
           
           const logoutUrl = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout?${params.toString()}`;
