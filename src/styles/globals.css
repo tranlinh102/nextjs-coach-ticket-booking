@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+}
+
+body {
+  --brand: #7FD858;
+  --brand-dark: #5EA53F;
+  --brand-light: rgba(127, 216, 88, 0.2); 
+
+  font-family: var(--font-inter);
+}
+
+::-webkit-scrollbar {
+  width: 8px;            
+  height: 8px;              
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #b3b3b3;       
+  border-radius: 9999px;     
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  width: 100%;
+  display: block;
+}
+
+.card-box-shadown {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .2);
+}
+
+
