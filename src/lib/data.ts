@@ -4,7 +4,7 @@ import {
   CustomersTableType,
   TicketForm,
   TicketsTable,
-  LatestTicketRaw,
+  Trip,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
@@ -30,23 +30,25 @@ export async function fetchRevenue() {
 
 export async function fetchLatestTickets() {
   try {
-    const data = await sql<LatestTicketRaw[]>`
-      SELECT tickets.ticket_code, customers.name, customers.image_url, customers.email, tickets.id
-      FROM tickets
-      JOIN customers ON tickets.customer_id = customers.id
-      ORDER BY tickets.created_at DESC
-      LIMIT 5`;
-
-    const latestTickets = data.map((ticket ) => ({
-      ...ticket ,
-      ticket_code: ticket .ticket_code,
-    }));
-    return latestTickets;
+    const data = await sql`
+      SELECT 
+        t.ticket_code,
+        c.name AS customer_name,
+        tr.route_name AS trip_name,
+        t.price_paid
+      FROM tickets t
+      JOIN customers c ON t.customer_id = c.id
+      JOIN trips tr ON t.trip_id = tr.id
+      ORDER BY t.created_at DESC
+      LIMIT 5;
+    `;
+    return data;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch the latest tickets.');
   }
 }
+
 
 export async function fetchCardData() {
   try {
@@ -190,20 +192,20 @@ export async function fetchCustomers() {
 
 export async function fetchTrips() {
   try {
-    const customers = await sql<CustomerField[]>`
+    const trips = await sql<Trip[]>`
       SELECT
         id,
         route_name
       FROM trips
-      ORDER BY name ASC
+      ORDER BY route_name ASC
     `;
-
-    return customers;
+    return trips;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all trips.');
   }
 }
+
 //
 export async function fetchFilteredCustomers(query: string) {
   try {

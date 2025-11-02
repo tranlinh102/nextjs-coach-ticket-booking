@@ -16,99 +16,61 @@ export default async function TicketsTable({
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          <div className="md:hidden">
-            {tickets?.map((ticket) => (
-              <div
-                key={ticket.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={ticket.image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${ticket.name}'s profile picture`}
-                      />
-                      <p>{ticket.name}</p>
-                    </div>
-                    <p className="text-sm text-gray-500">{ticket.email}</p>
-                  </div>
-                  <TicketStatus status={ticket.status} />
-                </div>
-                <div className="flex w-full items-center justify-between pt-4">
-                  <div>
-                    <p className="text-xl font-medium">
-                      {formatCurrency(ticket.price_paid)}
-                    </p>
-                    <p>{formatDateToLocal(ticket.sold_at)}</p>
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateTicket id={ticket.id} />
-                    <DeleteTicket id={ticket.id} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
-            <thead className="rounded-lg text-left text-sm font-normal">
+        <div className="rounded-2xl bg-white p-4 shadow-md ring-1 ring-gray-100">
+          <table className="min-w-full text-gray-800">
+            <thead className="text-sm font-semibold uppercase tracking-wide text-gray-600 border-b border-gray-200 bg-gray-50">
               <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Khách Hàng
+                <th scope="col" className="px-6 py-4 text-left">
+                  Khách hàng
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-4 py-4 text-left">
                   Email
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-4 py-4 text-left">
                   Số tiền
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Ngày 
+                <th scope="col" className="px-4 py-4 text-left">
+                  Ngày đặt
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Trạng Thái
+                <th scope="col" className="px-4 py-4 text-left">
+                  Trạng thái
                 </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Edit</span>
+                <th scope="col" className="px-4 py-4 text-right">
+                  Hành động
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+
+            <tbody className="divide-y divide-gray-100">
               {tickets?.map((ticket) => (
                 <tr
                   key={ticket.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  className="hover:bg-gray-50 transition duration-200"
                 >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                  <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <Image
-                        src={ticket.image_url}
-                        className="rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${ticket.name}'s profile picture`}
-                      />
-                      <p>{ticket.name}</p>
+                      <span className="font-medium">{ticket.name}</span>
                     </div>
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+
+                  <td className="px-4 py-4 text-sm text-gray-600">
                     {ticket.email}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+
+                  <td className="px-4 py-4 font-semibold text-gray-900">
                     {formatCurrency(ticket.price_paid)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+
+                  <td className="px-4 py-4 text-sm text-gray-500">
                     {formatDateToLocal(ticket.sold_at)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+
+                  <td className="px-4 py-4">
                     <TicketStatus status={ticket.status} />
                   </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-end gap-3">
+
+                  <td className="px-4 py-4 text-right">
+                    <div className="flex justify-end gap-2">
                       <UpdateTicket id={ticket.id} />
                       <DeleteTicket id={ticket.id} />
                     </div>
@@ -117,6 +79,12 @@ export default async function TicketsTable({
               ))}
             </tbody>
           </table>
+
+          {(!tickets || tickets.length === 0) && (
+            <p className="py-6 text-center text-gray-400">
+              Không có vé nào được tìm thấy.
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -14,10 +14,10 @@ import { Button } from '@/components/ui/button';
 
 export default function Form({
   customers,
-  //trips,
+  trips,
 }: {
   customers: CustomerField[];
-  //trips: Trip[];
+  trips: Trip[];
 }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createTicket, initialState);
@@ -57,7 +57,7 @@ export default function Form({
           </div>
         </div>
         
-        {/*<div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="trip" className="mb-2 block text-sm font-medium">
             Chọn chuyến đi 
           </label>
@@ -88,7 +88,7 @@ export default function Form({
                 </p>
               ))}
           </div>
-        </div> */}
+        </div>
 
         <div className="mb-4">
           <label htmlFor="price_paid" className="mb-2 block text-sm font-medium">

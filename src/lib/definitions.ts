@@ -85,3 +85,9 @@ export type TicketForm = {
   price_paid: number;
   status: 'booked' | 'paid' | 'canceled';
 };
+
+export type TripField = {
+  id: string;
+  route_name: string;
+};
+
