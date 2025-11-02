@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { isStaff } from "@/lib/roles";
+import VehicleList from "@/components/features/Dashboard/VehicleList";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -68,6 +69,11 @@ export default async function DashboardPage() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Vehicle Management Section */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <VehicleList />
       </div>
     </div>
   );
