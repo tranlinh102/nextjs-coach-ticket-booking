@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@heroicons/react": "^2.2.0",
     "axios": "^1.12.2",
     "lucide-react": "^0.545.0",
@@ -17,31 +16,19 @@
     "next-auth": "^4.24.11",
     "react": "19.1.0",
     "react-datepicker": "^8.7.0",
-=======
-    "next": "15.5.4",
-    "react": "19.1.0",
->>>>>>> c2c3221c51b16353630e79bdcbd28ea72096e1f8
     "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-<<<<<<< HEAD
-    "@types/node": "^20",
-=======
     "@types/estree": "^1.0.8",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^20.19.19",
->>>>>>> c2c3221c51b16353630e79bdcbd28ea72096e1f8
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4",
-<<<<<<< HEAD
-    "typescript": "^5"
-=======
     "typescript": "^5.9.3"
->>>>>>> c2c3221c51b16353630e79bdcbd28ea72096e1f8
   }
 }
