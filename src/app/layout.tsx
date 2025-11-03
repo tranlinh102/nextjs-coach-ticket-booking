@@ -1,15 +1,5 @@
-import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
-import SessionProvider from "@/components/SessionProvider";
-
-export const metadata: Metadata = {
-  title: "Đặt vé xe khách và xe Limousine",
-  description: "",
-  icons: {
-    icon: "/favicon.svg",
-  },
-};
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="vi" className={inter.variable}>
       <body className="bg-gray-50 text-gray-900">
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+        {children}
       </body>
     </html>
   );
