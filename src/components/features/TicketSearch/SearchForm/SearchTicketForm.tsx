@@ -7,27 +7,19 @@ import { vi } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import LocationPicker from "./LocationPicker";
 import { SwapIcon } from "@/components/ui/Icon";
-
-// import { formatDate } from "@/libs/date";
+import { formatDate } from "@/lib/utils";
 
 export default function SearchTicketForm() {
-  const [tripType, setTripType] = useState<"oneway" | "roundtrip">("oneway");
   const [from, setFrom] = useState("TP. Hồ Chí Minh");
   const [to, setTo] = useState("Đà Lạt");
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
-  const [returnDate, setReturnDate] = useState<Date | null>(null);
   const [tickets, setTickets] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // const formattedDepartureDate = departureDate ? formatDate(departureDate) : "";
-    // alert(`${formattedDepartureDate}`);
+    const formattedDepartureDate = departureDate ? formatDate(departureDate) : "";
 
-    // const formattedReturnDate = returnDate ? formatDate(returnDate) : "";
-    // alert(`${formattedReturnDate}`);
-
-    // alert(`Tìm chuyến xe từ ${from} đến ${to} (${departureDate?.toLocaleDateString()}), số vé: ${tickets}`);
+    alert(`Tìm chuyến xe từ ${from} đến ${to} (${formattedDepartureDate}), số vé: ${tickets}`);
   };
 
   const handleSwap = () => {
@@ -44,67 +36,11 @@ export default function SearchTicketForm() {
         style={{ outline: "8px solid rgba(127,216,88,.1)" }}
         noValidate
       >
-        {/* <div className="mb-4 flex items-center gap-6">
-          <label className="flex cursor-pointer items-center space-x-2">
-            <input
-              type="radio"
-              name="tripType"
-              value="oneway"
-              checked={tripType === "oneway"}
-              onChange={() => setTripType("oneway")}
-              className="peer sr-only"
-            />
-            <div
-              className="
-                flex h-5 w-5 items-center justify-center rounded-full border-2 
-                border-gray-400 text-transparent 
-                peer-checked:border-[var(--brand)] peer-checked:text-[var(--brand)]
-              "
-            >
-              <div className="h-2.5 w-2.5 rounded-full bg-current"></div>
-            </div>
-            <span className="text-gray-700 peer-checked:text-[var(--brand)]">
-              Một chiều
-            </span>
-          </label>
-          <label className="flex cursor-pointer items-center space-x-2">
-            <input
-              type="radio"
-              name="tripType"
-              value="roundtrip"
-              checked={tripType === "roundtrip"}
-              onChange={() => setTripType("roundtrip")}
-              className="peer sr-only"
-            />
-            <div
-              className="
-                flex h-5 w-5 items-center justify-center rounded-full border-2 
-                border-gray-400 text-transparent 
-                peer-checked:border-[var(--brand)] peer-checked:text-[var(--brand)]
-              "
-            >
-              <div className="h-2.5 w-2.5 rounded-full bg-current"></div>
-            </div>
-            <span className="text-gray-700 peer-checked:text-[var(--brand)]">
-              Khứ hồi
-            </span>
-          </label>
-          <a
-            href="#"
-            className="ml-auto text-sm text-[var(--brand)] hover:underline"
-          >
-            Hướng dẫn mua vé
-          </a>
-        </div> */}
-
         <div
-          className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${
-            tripType === "roundtrip" ? "lg:grid-cols-5" : "lg:grid-cols-4"
-          }`}
+          className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4`}
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto_1fr] sm:col-span-2 items-end">
             <LocationPicker label="Điểm đi" value={from} onSelect={setFrom} />
-
 
             <div className="flex items-center justify-center">
               <button
@@ -138,23 +74,6 @@ export default function SearchTicketForm() {
               className="w-full rounded-lg border border-gray-300 p-2"
             />
           </div>
-
-          {tripType === "roundtrip" && (
-            <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">
-                Ngày về
-              </label>
-              <DatePicker
-                selected={returnDate}
-                onChange={(date) => setReturnDate(date)}
-                dateFormat="dd/MM/yyyy"
-                locale={vi}
-                placeholderText="Chọn ngày"
-                minDate={new Date()}
-                className="w-full rounded-lg border border-gray-300 p-2"
-              />
-            </div>
-          )}
 
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">

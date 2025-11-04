@@ -93,13 +93,12 @@ export default function SearchFilter() {
             <h4 className="font-medium mb-2 text-gray-800">Loại xe</h4>
             <div className="flex flex-wrap gap-2">
               {carTypes.map((type) => {
-                const isSelected = selectedCarTypes.includes(type);
                 return (
                   <SortButton
                     key={type}
                     onClick={() => handleCarTypeChange(type)}
                     text={type}
-                    isSelected={isSelected}
+                    isSelected={selectedCarTypes.includes(type)}
                   />
                 );
               })}
@@ -112,13 +111,12 @@ export default function SearchFilter() {
             <h4 className="font-medium mb-2 text-gray-800">Hàng ghế</h4>
             <div className="flex flex-wrap gap-2">
               {seatRows.map((r) => {
-                const isSelected = selectedSeatRows.includes(r);
                 return (
                   <SortButton
                     key={r}
                     onClick={() => handleSeatRowChange(r)}
                     text={r}
-                    isSelected={isSelected}
+                    isSelected={selectedSeatRows.includes(r)}
                   />
                 );
               })}
@@ -131,13 +129,12 @@ export default function SearchFilter() {
             <h4 className="font-medium mb-2 text-gray-800">Tầng</h4>
             <div className="flex gap-2">
               {floors.map((floor) => {
-                const isSelected = selectedFloors.includes(floor);
                 return (
                   <SortButton
                     key={floor}
                     onClick={() => handleFloorChange(floor)}
                     text={floor}
-                    isSelected={isSelected}
+                    isSelected={selectedFloors.includes(floor)}
                   />
                 );
               })}
