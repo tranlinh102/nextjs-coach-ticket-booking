@@ -1,3 +1,5 @@
+import SideNav from "@/components/features/Admin/Dashboard/sidenav";
+import SessionErrorHandler from "@/components/auth/SessionErrorHandler";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,10 +12,12 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto py-8">
-        {children}
+    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <SessionErrorHandler />
+      <div className="w-full flex-none md:w-64">
+        <SideNav />
       </div>
+      <div className="flex flex-grow flex-col p-6 md:p-12">{children}</div>
     </div>
   );
 }

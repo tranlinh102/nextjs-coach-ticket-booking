@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   getVehicleById,
   updateVehicle,
-  deleteVehicle,
+  toggleVehicleActive,
 } from '@/services/vehicle.service';
 
 export async function GET(
@@ -37,6 +37,6 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const response = await deleteVehicle(id);
+  const response = await toggleVehicleActive(id, 'server');
   return NextResponse.json(response, { status: response.statusCode || 200 });
 }

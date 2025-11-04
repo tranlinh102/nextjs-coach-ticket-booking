@@ -22,11 +22,38 @@
         "name": "next"
       }
     ],
+    "baseUrl": "src",
     "paths": {
       "@/*": [
-        "./src/*"
+        "*"
+      ],
+      // alias cụ thể theo layer
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@type/*": [
+        "type/*"
+      ],
+      "@service/*": [
+        "service/*"
+      ],
+      "@schema/*": [
+        "schema/*"
+      ],
+      "@hook/*": [
+        "hook/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@styles/*": [
+        "styles/*"
       ]
-    }
+    },
+    "typeRoots": [
+      "src/type",
+      "./node_modules/@types"
+    ],
   },
   "include": [
     "next-env.d.ts",

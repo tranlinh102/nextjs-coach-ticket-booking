@@ -3,11 +3,13 @@ import { fetchVehicles, createVehicle } from '@/services/vehicle.service';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get('query') || '';
+  const keyword = searchParams.get('query') || searchParams.get('keyword') || '';
   const page = parseInt(searchParams.get('page') || '1');
   const size = parseInt(searchParams.get('size') || '10');
+  const activeParam = searchParams.get('active');
+  const active = activeParam !== null ? activeParam === 'true' : undefined;
 
-  const response = await fetchVehicles(query, page, size);
+  const response = await fetchVehicles(keyword, page, size, active, 'server');
 
   return NextResponse.json(response, { status: response.statusCode || 200 });
 }

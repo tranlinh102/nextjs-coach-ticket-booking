@@ -57,14 +57,12 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // Log error cho development
-    if (process.env.NODE_ENV === "development") {
-      console.error("API Error:", {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[API ERROR DETAILS]', {
         url: error.config?.url,
         method: error.config?.method,
-        status: error.response?.status,
-        message: error.message,
         data: error.response?.data,
+        status: error.response?.status,
       });
     }
 

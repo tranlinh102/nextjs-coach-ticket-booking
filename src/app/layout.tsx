@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Đặt vé xe khách và xe Limousine",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="bg-gray-50 text-gray-900">
         <SessionProvider>
           {children}
+          <Toaster richColors position="top-right" />
         </SessionProvider>
       </body>
     </html>

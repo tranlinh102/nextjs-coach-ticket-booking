@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import "@/styles/globals.css";
 
@@ -22,7 +23,9 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <RoleBasedRedirect />
+      <Suspense fallback={null}>
+        <RoleBasedRedirect />
+      </Suspense>
       <Header />
       <main className="container mx-auto pt-24">{children}</main>
       {/* <FloatingButtons /> */}
