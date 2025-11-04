@@ -118,7 +118,6 @@ export default function BookingSearchBox() {
         const prevTo = to;
         setFrom(prevTo);
         setTo(prevFrom);
-        // clear suggestion lists and active indices
         setSuggestionsFrom([]);
         setSuggestionsTo([]);
         setActiveFrom(-1);
