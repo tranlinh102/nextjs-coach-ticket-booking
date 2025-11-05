@@ -2,13 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-
-type ActionButtonProps = {
-  id?: string;
-  label?: string;
-  entityName?: string;
-};
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 export function CreateButton() {
   const pathname = usePathname();
@@ -22,51 +16,5 @@ export function CreateButton() {
       <span className="hidden md:block">Thêm mới</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
     </Link>
-  );
-}
-
-export function EditButton({ id }: ActionButtonProps) {
-  const pathname = usePathname();
-  if (!id) return null;
-  const href = `${pathname}/${id}/edit`;
-
-  return (
-    <Link href={href} className="rounded-md border p-2 hover:bg-gray-100">
-      <PencilIcon className="w-5" />
-    </Link>
-  );
-}
-
-export function DeleteButton({ id, entityName = 'mục này' }: ActionButtonProps) {
-  const pathname = usePathname();
-
-  async function handleDelete() {
-    if (!id) return;
-    const ok = confirm(`Bạn có chắc muốn xóa ${entityName} không?`);
-    if (!ok) return;
-
-    try {
-      const res = await fetch(`${pathname}/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!res.ok) throw new Error('Không thể xóa');
-
-      alert('Xóa thành công');
-      window.location.reload(); // hoặc bạn có thể dùng router.refresh() nếu xài next/navigation
-    } catch (err) {
-      alert('Lỗi khi xóa!');
-      console.error(err);
-    }
-  }
-
-  return (
-    <button
-      onClick={handleDelete}
-      className="rounded-md border p-2 hover:bg-gray-100"
-    >
-      <span className="sr-only">Delete</span>
-      <TrashIcon className="w-4" />
-    </button>
   );
 }

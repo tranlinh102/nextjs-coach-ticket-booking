@@ -1,12 +1,15 @@
+'use client';
+
+import { useEffect } from 'react';
 import Breadcrumbs from '@/components/ui/breadcrumbs';
 import CreateVehicleForm from '@/components/features/Admin/vehicles/create-form';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Tạo xe mới - Admin Dashboard - Đặt vé xe khách và xe Limousine',
-};
 
 export default function Page() {
+  useEffect(() => {
+    // Set page title
+    document.title = 'Tạo xe mới - Admin Dashboard - Đặt vé xe khách và xe Limousine';
+  }, []);
+
   return (
     <div className="w-full">
       <Breadcrumbs

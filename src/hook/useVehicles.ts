@@ -56,14 +56,17 @@ export function useVehicles() {
 
       if (!result.success) {
         showToast.error(result.message || 'Không thể tải thông tin xe');
-        return null;
+        return { success: false, vehicle: undefined };
       }
 
-      return result.data as Vehicle;
+      return {
+        success: true,
+        vehicle: result.data as Vehicle,
+      };
     } catch (error) {
       console.error('Error fetching vehicle:', error);
       showToast.error('Có lỗi xảy ra khi tải dữ liệu');
-      return null;
+      return { success: false, vehicle: undefined };
     } finally {
       setLoading(false);
     }

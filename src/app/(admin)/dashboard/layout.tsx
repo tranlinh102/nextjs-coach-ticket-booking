@@ -2,6 +2,8 @@ import SideNav from "@/components/features/Admin/Dashboard/sidenav";
 import SessionErrorHandler from "@/components/auth/SessionErrorHandler";
 import type { Metadata } from "next";
 
+export const experimental_ppr = true;
+
 export const metadata: Metadata = {
   title: "Admin Dashboard - Đặt vé xe khách và xe Limousine",
   description: "",
