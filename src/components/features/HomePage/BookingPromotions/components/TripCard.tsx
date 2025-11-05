@@ -16,14 +16,14 @@ export default function TripCard(props: Trip) {
     <div className="rounded-2xl bg-white p-5 shadow-md border border-gray-100">
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <h4 className="text-base font-bold">Tuyến: {props.routeId}</h4>
+          <h4 className="text-base font-bold">Tuyến: {props.route.name}</h4>
           <span className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700">
             {props.status}
           </span>
         </div>
 
         <div className="text-sm text-gray-600">
-          🚍 Xe: <span className="font-semibold">{props.vehicleId}</span>
+          🚍 Loại xe: <span className="font-semibold">{props.vehicle.type}</span>
         </div>
 
         <div className="text-sm text-gray-600">
