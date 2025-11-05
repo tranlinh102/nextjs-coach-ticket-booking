@@ -1,16 +1,6 @@
-"use client";
+import { Trip } from "@/services/trip.service";
 
-type TripCardProps = {
-  id: string;
-  routeId: string;
-  vehicleId: string;
-  scheduledDepartureTime: string;
-  scheduledArrivalTime: string;
-  price: number;
-  status: string;
-};
-
-export default function TripCard(props: TripCardProps) {
+export default function TripCard(props: Trip) {
   const formatTime = (dateStr: string) => {
     return new Date(dateStr).toLocaleTimeString("vi-VN", {
       hour: "2-digit",
@@ -57,3 +47,4 @@ export default function TripCard(props: TripCardProps) {
     </div>
   );
 }
+

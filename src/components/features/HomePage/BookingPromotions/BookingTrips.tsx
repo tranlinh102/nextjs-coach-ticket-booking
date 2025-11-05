@@ -1,15 +1,11 @@
+import { Trip } from "@/services/trip.service";
 import { fetchTrips } from "@/services/trip.service";
 import TripCard from "./components/TripCard";
 
-
 export default async function BookingTrips() {
-  // Call API ở server
-  const res = await fetchTrips();
+  const { data } = await fetchTrips();
 
-  console.log(res);
-  
-
-  const tripList = res?.data ?? [];
+  const tripList: Trip[] = data ?? [];
 
   return (
     <section className="relative -mt-20 max-w-7xl mx-auto px-6">
@@ -24,7 +20,7 @@ export default async function BookingTrips() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {tripList.map((trip) => (
+          {tripList.map((trip: Trip) => (
             <TripCard key={trip.id} {...trip} />
           ))}
         </div>
@@ -32,3 +28,4 @@ export default async function BookingTrips() {
     </section>
   );
 }
+
