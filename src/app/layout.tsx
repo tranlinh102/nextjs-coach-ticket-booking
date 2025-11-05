@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
 import { Toaster } from "sonner";
 
+export const experimental_ppr = true;
+
 export const metadata: Metadata = {
   title: "Đặt vé xe khách và xe Limousine",
   description: "",
