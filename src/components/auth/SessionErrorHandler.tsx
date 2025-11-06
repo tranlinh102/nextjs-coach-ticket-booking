@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useRef } from 'react';
-import { showToast } from '@/lib/api/api-helpers';
+import { showToast } from '@/lib/api-helpers';
 
 /**
  * Component xử lý lỗi session (refresh token hết hạn)

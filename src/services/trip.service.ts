@@ -1,5 +1,5 @@
 import { getAxiosByContext, type AxiosContext } from '@/lib/api';
-import { handleApiError, wrapResponse } from '@/lib/api/api-helpers';
+import { handleApiError, wrapResponse } from '@/lib/api-helpers';
 import { ApiResponse } from '@/type/api';
 
 export type Vehicle = {
