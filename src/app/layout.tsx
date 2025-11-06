@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
+import SessionErrorHandler from "@/components/auth/SessionErrorHandler";
 import { Toaster } from "sonner";
 
 export const experimental_ppr = true;
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="vi" className={inter.variable}>
       <body className="bg-gray-50 text-gray-900">
         <SessionProvider>
+          <SessionErrorHandler />
           {children}
           <Toaster richColors position="top-right" />
         </SessionProvider>
