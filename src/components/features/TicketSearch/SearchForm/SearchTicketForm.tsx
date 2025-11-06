@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import { vi } from "date-fns/locale";
+import { vi } from "date-fns/locale/vi";
 
 import "react-datepicker/dist/react-datepicker.css";
 import LocationPicker from "./LocationPicker";

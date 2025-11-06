@@ -1,7 +1,7 @@
 "use client";
 
 import DatePicker from "react-datepicker";
-import { vi } from "date-fns/locale";
+import { vi } from "date-fns/locale/vi";
 import { useEffect, useRef, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
