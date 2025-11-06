@@ -6,8 +6,11 @@ export default withAuth(
     const token = req.nextauth.token;
 
     // Get user roles
-    const roles = (token?.roles as string[]) || [];
-    const isStaff = roles.includes("staff");
+    const rawRoles = token?.roles;
+    const roles = Array.isArray(rawRoles) ? 
+                  rawRoles : typeof rawRoles === 'string' ? [rawRoles]
+                  : [];
+    const isStaff = roles.includes('staff');
 
     // Only staff can access dashboard routes
     // If not staff, redirect to homepage

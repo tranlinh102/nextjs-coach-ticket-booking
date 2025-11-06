@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
 type PaginationProps = {
   totalPages: number;
