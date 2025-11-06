@@ -20,8 +20,11 @@ export default withAuth(
   },
   {
     callbacks: {
-      // Fast auth check - only verify token exists
-      authorized: ({ token }) => !!token,
+      // Redirect to signin page if not authenticated
+      authorized: ({ token }) => {
+        // If no token, will automatically redirect to signin with Keycloak
+        return !!token;
+      },
     },
   }
 );
