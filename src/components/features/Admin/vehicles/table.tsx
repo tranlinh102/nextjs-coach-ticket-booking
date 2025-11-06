@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useVehicles } from '@/hook/useVehicles';
 import { DataTable } from '@components/ui/data-table';
-import { Vehicle } from '@/services/vehicle.service';
+import { Vehicle } from '@/type/vehicle';
 import Pagination from '@components/ui/Pagination';
 import { useDebounce } from '@hook/useDebounce';
 

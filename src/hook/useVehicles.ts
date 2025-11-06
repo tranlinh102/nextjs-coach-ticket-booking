@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { showToast } from '@/lib/api-helpers';
-import { Vehicle, VehicleFormData } from '@/services/vehicle.service';
+import { Vehicle, VehicleFormData } from '@/type/vehicle';
 import { PaginatedResponse } from '@/type/api';
 
 export function useVehicles() {

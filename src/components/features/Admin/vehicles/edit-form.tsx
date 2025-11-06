@@ -5,7 +5,7 @@ import { TruckIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useVehicles } from '@/hook/useVehicles';
-import { Vehicle } from '@/services/vehicle.service';
+import { Vehicle } from '@/type/vehicle';
 
 export default function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
   const router = useRouter();

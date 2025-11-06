@@ -5,7 +5,7 @@ import { useParams, notFound } from 'next/navigation';
 import Breadcrumbs from '@/components/ui/breadcrumbs';
 import EditVehicleForm from '@/components/features/Admin/vehicles/edit-form';
 import { useVehicles } from '@/hook/useVehicles';
-import { Vehicle } from '@/services/vehicle.service';
+import { Vehicle } from '@/type/vehicle';
 
 export default function Page() {
   const params = useParams();

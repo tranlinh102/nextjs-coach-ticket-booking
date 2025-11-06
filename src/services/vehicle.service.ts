@@ -1,23 +1,7 @@
 import { getAxiosByContext, type AxiosContext } from '@/lib/api';
 import { handleApiError, wrapResponse } from '@/lib/api-helpers';
 import { ApiResponse, PaginatedResponse } from '@/type/api';
-
-export type Vehicle = {
-  id: string;
-  licensePlate: string;
-  seatCapacity: number;
-  activeSeatCount: number;
-  type: string;
-  status: string;
-  active: boolean;
-};
-
-export type VehicleFormData = {
-  licensePlate: string;
-  seatCapacity: number;
-  activeSeatCount: number;
-  type: string;
-};
+import { Vehicle, VehicleFormData } from '@/type/vehicle';
 
 // ===== CONTEXT-AWARE FUNCTIONS =====
 
