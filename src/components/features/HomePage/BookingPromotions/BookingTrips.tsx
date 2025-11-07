@@ -1,6 +1,6 @@
-import { Trip } from "@/services/trip.service";
 import { fetchTrips } from "@/services/trip.service";
 import TripCard from "./components/TripCard";
+import { Trip } from "@/type";
 
 export default async function BookingTrips() {
   const { data } = await fetchTrips();
