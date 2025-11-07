@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Logo from "./components/Logo";
+import Logo from "../Logo";
 import Navbar from "./components/Navbar";
+import Link from "next/dist/client/link";
 
 export default function Header() {
   const [hidden, setHidden] = useState(false);
@@ -31,9 +32,9 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-        <a href="/">
+        <Link href="/">
           <Logo />
-        </a>
+        </Link>
         <Navbar />
       </div>
     </header>

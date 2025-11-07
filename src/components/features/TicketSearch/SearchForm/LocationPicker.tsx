@@ -79,7 +79,6 @@ export default function LocationPicker({
         placeholder={`Chọn ${label.toLowerCase()}`}
       />
 
-      {/* --- BẮT ĐẦU: Modal chọn địa điểm --- */}
       {isOpen && (
         <div
           className="absolute top-full left-0 z-10 mt-2 w-80 max-w-sm
@@ -122,7 +121,6 @@ export default function LocationPicker({
           </ul>
         </div>
       )}
-      {/* --- KẾT THÚC: Modal chọn địa điểm --- */}
     </div>
   );
 }

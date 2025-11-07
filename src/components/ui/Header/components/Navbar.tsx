@@ -1,29 +1,19 @@
 "use client";
 
 import { HelpIcon, UserIcon, ChevronDownIcon } from "@/components/ui/Icon";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { isStaff } from "@/lib/roles";
+import { useLogout } from "@/hook/useLogout";
+import { useSmartLogin } from "@/hook/useSmartLogin";
 
 export default function NavBar() {
   const [accountOpen, setAccountOpen] = useState(false);
   const { data: session, status } = useSession();
   const userIsStaff = session ? isStaff(session) : false;
 
-  const handleSignOut = async () => {
-    // Build Keycloak logout URL
-    const keycloakLogoutUrl = `${process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`;
-    const params = new URLSearchParams({
-      post_logout_redirect_uri: window.location.origin,
-      client_id: process.env.NEXT_PUBLIC_AUTH_KEYCLOAK_ID || "",
-    });
-
-    // Sign out from NextAuth first
-    await signOut({ redirect: false });
-
-    // Then redirect to Keycloak logout
-    window.location.href = `${keycloakLogoutUrl}?${params.toString()}`;
-  };
+  const { handleSignOut } = useLogout();
+  const { handleLogin } = useSmartLogin();
 
   return (
     <nav className="flex items-center gap-8 text-sm font-medium text-gray-700">
@@ -64,7 +54,7 @@ export default function NavBar() {
                   </a>
                 )}
                 <button 
-                  onClick={handleSignOut} 
+                  onClick={handleSignOut}
                   className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
                 >
                   Đăng xuất
@@ -72,7 +62,7 @@ export default function NavBar() {
               </>
             ) : (
               <button 
-                onClick={() => signIn("keycloak")} 
+                onClick={handleLogin} 
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100"
               >
                 Đăng nhập / Đăng ký

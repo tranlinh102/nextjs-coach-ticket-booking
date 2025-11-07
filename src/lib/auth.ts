@@ -103,6 +103,21 @@ export const authOptions: AuthOptions = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // Check if the redirect is coming from signIn
+      // If url contains callbackUrl, use it
+      if (url.startsWith(baseUrl)) {
+        const urlObj = new URL(url);
+        const callbackUrl = urlObj.searchParams.get('callbackUrl');
+        if (callbackUrl) {
+          return callbackUrl.startsWith('/') ? `${baseUrl}${callbackUrl}` : callbackUrl;
+        }
+      }
+      
+      // Default: go to homepage, RoleBasedRedirect will handle staff redirect
+      // This allows us to check user role on client side
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
   },
   events: {
     async signOut({ token }) {
@@ -111,7 +126,7 @@ export const authOptions: AuthOptions = {
         try {
           const params = new URLSearchParams({
             id_token_hint: token.idToken as string,
-            post_logout_redirect_uri: process.env.AUTH_URL || "http://localhost:3000",
+            post_logout_redirect_uri: process.env.AUTH_URL || "http://localhost:4000",
           });
           
           const logoutUrl = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout?${params.toString()}`;
@@ -121,10 +136,6 @@ export const authOptions: AuthOptions = {
         }
       }
     },
-  },
-  pages: {
-    signIn: "/",
-    error: "/",
   },
   session: {
     strategy: "jwt",

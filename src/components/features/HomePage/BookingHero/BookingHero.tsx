@@ -1,5 +1,7 @@
-import BookingPromotions from "../BookingPromotions/BookingPromotions";
+import { Suspense } from "react";
+import BookingTrips from "../BookingPromotions/BookingTrips";
 import BookingSearchBox from "./components/BookingSearchBox";
+import TripsSkeleton from "@/components/ui/TripsSkeleton";
 
 export default function BookingHero() {
   return (
@@ -10,7 +12,10 @@ export default function BookingHero() {
         <BookingSearchBox />
       </section>
 
-      <BookingPromotions />
+      <Suspense fallback={<TripsSkeleton />}>
+        <BookingTrips />
+      </Suspense>
     </div>
   );
 }
+

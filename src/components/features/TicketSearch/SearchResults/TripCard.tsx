@@ -1,4 +1,3 @@
-import TripDetailTabs from "./TripDetailTabs";
 import { EndPointIcon, StartPointIcon } from "@/components/ui/Icon";
 
 interface TripCardProps {
@@ -10,8 +9,6 @@ interface TripCardProps {
   type: string;
   available: number;
   price: string;
-  isOpen: boolean;
-  onClick: () => void;
 }
 
 export default function TripCard(
@@ -24,8 +21,6 @@ export default function TripCard(
   type,
   available,
   price,
-  isOpen,
-  onClick,
   }: TripCardProps) {
   return (
     <div className="bg-white card-box-shadown rounded-xl shadow-sm p-4 flex flex-col gap-3 transition-all">
@@ -73,7 +68,13 @@ export default function TripCard(
       </div>
 
       <div className="flex gap-4 text-gray-500 text-sm border-t pt-3">
-        <TripDetailTabs onClick={onClick} isOpen={isOpen} />
+        <div className="w-full rounded-xl overflow-hidden bg-white">
+          <div className="flex">
+            <button className="cursor-pointer ml-auto bg-[var(--brand-light)] text-[var(--brand-dark)] px-4 py-2 rounded-full m-2 hover:bg-[var(--brand-dark)] hover:text-white transition font-semibold">
+              Chọn chuyến
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
