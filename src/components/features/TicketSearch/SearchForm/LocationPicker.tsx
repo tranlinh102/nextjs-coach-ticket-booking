@@ -1,38 +1,27 @@
 "use client";
 
+import { Province } from "@/type/province";
 import { useState, useRef, useEffect } from "react";
-
-const allLocations = [
-  "Bình Thuận",
-  "Cà Mau",
-  "Cao Bằng",
-  "Cần Thơ",
-  "Đà Nẵng",
-  "Đắk Lắk",
-  "Hà Nội",
-  "Hải Phòng",
-  "Nha Trang",
-  "TP. Hồ Chí Minh",
-  "Đà Lạt",
-  "Vũng Tàu",
-];
 
 export default function LocationPicker({
   label,
   value,
+  list,
   onSelect,
 }: {
   label: string;
-  value: string;
-  onSelect: (value: string) => void;
+  value: Province | null;
+  list: Province[];
+  onSelect: (value: Province) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const pickerRef = useRef<HTMLDivElement>(null); // Ref cho toàn bộ component
+  
 
   // Lọc danh sách địa điểm dựa trên tìm kiếm
-  const filteredLocations = allLocations.filter((loc) =>
-    loc.toLowerCase().includes(search.toLowerCase())
+  const filteredLocations = list.filter((loc) =>
+    loc.name.toLowerCase().includes(search.toLowerCase())
   );
 
   // Xử lý khi bấm ra ngoài component thì sẽ đóng modal
@@ -55,7 +44,7 @@ export default function LocationPicker({
   }, [pickerRef]);
 
   // Xử lý khi chọn một địa điểm
-  const handleSelectLocation = (location: string) => {
+  const handleSelectLocation = (location: Province) => {
     onSelect(location);
     setIsOpen(false);
     setSearch(""); // Reset tìm kiếm
@@ -72,7 +61,7 @@ export default function LocationPicker({
       */}
       <input
         type="text"
-        value={value}
+        value={value ? value.name : ""}
         onFocus={() => setIsOpen(true)}
         readOnly
         className="w-full rounded-lg border border-gray-300 p-2 cursor-pointer"
@@ -103,13 +92,13 @@ export default function LocationPicker({
           <ul className="max-h-60 overflow-y-auto">
             {filteredLocations.length > 0 ? (
               filteredLocations.map((loc) => (
-                <li key={loc}>
+                <li key={loc.code}>
                   <button
                     type="button" // Quan trọng: để không submit form
                     className="w-full rounded-md p-2 text-left text-gray-700 hover:bg-gray-100"
                     onClick={() => handleSelectLocation(loc)}
                   >
-                    {loc}
+                    {loc.name}
                   </button>
                 </li>
               ))

@@ -1,6 +1,9 @@
 import SearchFilter from "@/components/features/TicketSearch/SearchFilter/SearchFilter";
 import TripCard from "@/components/features/TicketSearch/SearchResults/TripCard";
 import SearchTicketForm from "@/components/features/TicketSearch/SearchForm/SearchTicketForm";
+import { fetchProvinces } from "@/services/province.service";
+import { Province } from "@/type/province";
+import { LocationProvider } from "@/components/LocationProvider";
 
 const trips = [
     {
@@ -38,11 +41,17 @@ const trips = [
     },
   ];
 
-export default function SearchPage() {
+export default async function SearchPage() {
+  const { data } = await fetchProvinces();  
+  const provinceList: Province[] = data ?? [];
+  const filterProvinceList = provinceList.filter((province) => province.active === true);
+
   return (
     <div className="space-y-12">
       {/* Form tìm kiếm */}
-      <SearchTicketForm />
+      <LocationProvider value={filterProvinceList}>
+        <SearchTicketForm />
+      </LocationProvider>
 
       <div className="max-w-7xl mx-auto py-10 px-4 grid grid-cols-1 md:grid-cols-[350px_1fr] gap-6 items-start">
         {/* Bộ lọc */}

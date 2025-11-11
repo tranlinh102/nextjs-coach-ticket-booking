@@ -8,18 +8,27 @@ import "react-datepicker/dist/react-datepicker.css";
 import LocationPicker from "./LocationPicker";
 import { SwapIcon } from "@/components/ui/Icon";
 import { formatDate } from "@/lib/utils";
+import { useLocations } from "@/components/LocationProvider";
+import { Province } from "@/type/province";
 
 export default function SearchTicketForm() {
-  const [from, setFrom] = useState("TP. Hồ Chí Minh");
-  const [to, setTo] = useState("Đà Lạt");
+  const [from, setFrom] = useState<Province | null>(null);
+  const [to, setTo] = useState<Province | null>(null);
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
   const [tickets, setTickets] = useState(1);
 
+  const provinces = useLocations();
+  const provincesForFrom = provinces.filter(
+    p => !to || parseInt(p.code) !== parseInt(to.code)
+  );
+
+  const provincesForTo = provinces.filter(
+    p => !from || parseInt(p.code) !== parseInt(from.code)
+  );
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formattedDepartureDate = departureDate ? formatDate(departureDate) : "";
-
-    alert(`Tìm chuyến xe từ ${from} đến ${to} (${formattedDepartureDate}), số vé: ${tickets}`);
   };
 
   const handleSwap = () => {
@@ -40,7 +49,7 @@ export default function SearchTicketForm() {
           className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4`}
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto_1fr] sm:col-span-2 items-end">
-            <LocationPicker label="Điểm đi" value={from} onSelect={setFrom} />
+            <LocationPicker label="Điểm đi" value={from} onSelect={setFrom} list={provincesForFrom} />
 
             <div className="flex items-center justify-center">
               <button
@@ -57,7 +66,7 @@ export default function SearchTicketForm() {
               </button>
             </div>
 
-            <LocationPicker label="Điểm đến" value={to} onSelect={setTo} />
+            <LocationPicker label="Điểm đến" value={to} onSelect={setTo} list={provincesForTo} />
           </div>
 
           <div>
