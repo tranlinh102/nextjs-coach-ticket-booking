@@ -30,3 +30,18 @@ export interface Trip {
   vehicle: Vehicle;
   route: Route;
 }
+
+export interface TripResponse {
+    tripId: string;
+    vehicleId: string;
+    vehicleType: string;
+    startStopName: string;
+    startStopAddress: string;
+    endStopName: string;
+    endStopAddress: string;
+    scheduledDepartureTime: string;
+    scheduledArrivalTime: string;
+    availableSeats: number;
+    activeSeatCount: number;
+    price: number;
+}

@@ -10,6 +10,7 @@ import { SwapIcon } from "@/components/ui/Icon";
 import { formatDate } from "@/lib/utils";
 import { useLocations } from "@/components/LocationProvider";
 import { Province } from "@/type/province";
+import { useRouter } from "next/navigation";
 
 export default function SearchTicketForm() {
   const [from, setFrom] = useState<Province | null>(null);
@@ -17,7 +18,9 @@ export default function SearchTicketForm() {
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
   const [tickets, setTickets] = useState(1);
 
+  const router = useRouter();
   const provinces = useLocations();
+
   const provincesForFrom = provinces.filter(
     p => !to || parseInt(p.code) !== parseInt(to.code)
   );
@@ -29,6 +32,15 @@ export default function SearchTicketForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formattedDepartureDate = departureDate ? formatDate(departureDate) : "";
+
+    const query = new URLSearchParams({
+      departureDate: "2025-11-06", // Thay thế bằng formattedDepartureDate khi backend hỗ trợ
+      startProvinceId: from?.id || "",
+      endProvinceId: to?.id || "",
+      requiredSeats: tickets.toString(),
+    }).toString();
+
+    router.push(`/search?${query}`);
   };
 
   const handleSwap = () => {

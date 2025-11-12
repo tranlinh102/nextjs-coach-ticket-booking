@@ -1,50 +1,40 @@
 import SearchFilter from "@/components/features/TicketSearch/SearchFilter/SearchFilter";
-import TripCard from "@/components/features/TicketSearch/SearchResults/TripCard";
 import SearchTicketForm from "@/components/features/TicketSearch/SearchForm/SearchTicketForm";
 import { fetchProvinces } from "@/services/province.service";
 import { Province } from "@/type/province";
 import { LocationProvider } from "@/components/LocationProvider";
+import SearchResult from "@/components/features/TicketSearch/SearchResults/SearchResult";
+import { fetchAvailableTrips } from "@/services/trip.service";
+import { TripResponse } from "@/type";
 
-const trips = [
-    {
-      id: 1,
-      startTime: "00:02",
-      endTime: "08:02",
-      from: "Bến Xe An Sương",
-      to: "Bến Xe Đà Lạt",
-      duration: "8 giờ",
-      type: "Limousine",
-      available: 32,
-      price: "290.000đ",
-    },
-    {
-      id: 2,
-      startTime: "00:30",
-      endTime: "08:30",
-      from: "Bến Xe Miền Tây",
-      to: "Bến Xe Đà Lạt",
-      duration: "8 giờ",
-      type: "Limousine",
-      available: 28,
-      price: "290.000đ",
-    },
-    {
-      id: 3,
-      startTime: "00:35",
-      endTime: "08:35",
-      from: "BX Miền Đông Mới",
-      to: "Bến Xe Đà Lạt",
-      duration: "8 giờ",
-      type: "Limousine",
-      available: 33,
-      price: "290.000đ",
-    },
-  ];
-
-export default async function SearchPage() {
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { data } = await fetchProvinces();  
   const provinceList: Province[] = data ?? [];
   const filterProvinceList = provinceList.filter((province) => province.active === true);
+
+  const params = await searchParams;
+  const departureDate = params.departureDate || "";
+  const startProvinceId = params.startProvinceId || "";
+  const endProvinceId = params.endProvinceId || "";
+  const requiredSeats = params.requiredSeats || "1";
+
+  const response = await fetchAvailableTrips(
+    departureDate,
+    startProvinceId,
+    endProvinceId,
+    parseInt(requiredSeats, 10)
+  );
+  const trips: TripResponse[] = response.data ?? [];
+
+  // Tìm tên tỉnh
+  const startProvince = filterProvinceList.find(p => p.id === startProvinceId);
+  const endProvince = filterProvinceList.find(p => p.id === endProvinceId);
+  const startProvinceName = startProvince?.name || "";
+  const endProvinceName = endProvince?.name || "";
 
   return (
     <div className="space-y-12">
@@ -59,24 +49,16 @@ export default async function SearchPage() {
 
         {/* Kết quả */}
         <div>
-          {/* Thông tin chuyến */}
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">
-              TP. Hồ Chí Minh – Đà Lạt <span className="text-gray-500">(84)</span>
+              {startProvinceName} – {endProvinceName}{" "}
+              <span className="text-gray-500">({trips.length})</span>
             </h2>
           </div>
-
-          {/* Danh sách chuyến chuyến */}
-          <div className="flex flex-col gap-4">
-            {trips.map((trip) => (
-              <TripCard 
-              key={trip.id} 
-              {...trip} 
-              />
-            ))}
-          </div>
+          <SearchResult trips={trips}/>
         </div>
       </div>
     </div>
   );
 }
+
