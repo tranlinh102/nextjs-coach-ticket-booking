@@ -99,7 +99,7 @@ export function createAxiosApi(token?: string, enableAutoRefresh = false): Axios
           });
         }
       } else {
-        console.error('[API Error]', error.message);
+        console.log('[API Error]', error.message);
       }
 
       return Promise.reject(error);
