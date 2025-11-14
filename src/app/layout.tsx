@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { Inter } from "next/font/google";
+// Removed `next/font/google` to avoid server-side download warnings
 import SessionProvider from "@/components/SessionProvider";
 import SessionErrorHandler from "@/components/auth/SessionErrorHandler";
 import { Toaster } from "sonner";
@@ -15,11 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter", 
-});
+// Use system fonts instead of downloading from Google at build/runtime
 
 export default function RootLayout({
   children,
@@ -27,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" className={inter.variable}>
+    <html lang="vi" className="antialiased">
       <body className="bg-gray-50 text-gray-900">
         <SessionProvider>
           <SessionErrorHandler />
