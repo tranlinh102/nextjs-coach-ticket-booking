@@ -12,9 +12,15 @@ import { useLocations } from "@/components/LocationProvider";
 import { Province } from "@/type/province";
 import { useRouter } from "next/navigation";
 
-export default function SearchTicketForm() {
-  const [from, setFrom] = useState<Province | null>(null);
-  const [to, setTo] = useState<Province | null>(null);
+export default function SearchTicketForm({
+  startProvince = null,
+  endProvince = null,
+}: {
+  startProvince?: Province | null;
+  endProvince?: Province | null;
+}) {
+  const [from, setFrom] = useState<Province | null>(startProvince);
+  const [to, setTo] = useState<Province | null>(endProvince);
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
   const [tickets, setTickets] = useState(1);
 

@@ -1,25 +1,83 @@
 "use client"; 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TrashIcon } from "@/components/ui/Icon"; 
 import SortButton from "./components/SortButton";
 import SortItem from "./components/SortItem";
+import { TripResponse } from "@/type";
 
 const timeOptions = [
-  "Sáng sớm 00:00 - 06:00 (13)",
-  "Buổi sáng 06:00 - 12:00 (17)",
-  "Buổi chiều 12:00 - 18:00 (18)",
-  "Buổi tối 18:00 - 24:00 (36)",
+  "Sáng sớm 00:00 - 06:00",
+  "Buổi sáng 06:00 - 12:00",
+  "Buổi chiều 12:00 - 18:00",
+  "Buổi tối 18:00 - 24:00",
 ];
 const carTypes = ["Ghế", "Giường", "Limousine"];
 const seatRows = ["Hàng đầu", "Hàng giữa", "Hàng cuối"];
 const floors = ["Tầng trên", "Tầng dưới"];
 
-export default function SearchFilter() {
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([""]);
-  const [selectedCarTypes, setSelectedCarTypes] = useState<string[]>([""]);
-  const [selectedSeatRows, setSelectedSeatRows] = useState<string[]>([""]);
-  const [selectedFloors, setSelectedFloors] = useState<string[]>([""]);
+export default function SearchFilter({
+  initialTrips = [],
+  onFilter,
+}: {
+  initialTrips?: TripResponse[];
+  onFilter?: (trips: TripResponse[]) => void;
+}) {
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedCarTypes, setSelectedCarTypes] = useState<string[]>([]);
+  const [selectedSeatRows, setSelectedSeatRows] = useState<string[]>([]);
+  const [selectedFloors, setSelectedFloors] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Compute filtered trips whenever any filter changes
+    let result = initialTrips.slice();
+
+    // If no filters selected, return the full initial list immediately
+    const hasAnyFilter =
+      selectedTimes.length > 0 ||
+      selectedCarTypes.length > 0 ||
+      selectedSeatRows.length > 0 ||
+      selectedFloors.length > 0;
+
+    if (!hasAnyFilter) {
+      if (onFilter) onFilter(result);
+      return;
+    }
+
+    // Time filtering: map label to hour ranges
+    if (selectedTimes.length > 0) {
+      const timeRanges = selectedTimes.map((label) => {
+        if (label.includes("00:00") && label.includes("06:00")) return [0, 6];
+        if (label.includes("06:00") && label.includes("12:00")) return [6, 12];
+        if (label.includes("12:00") && label.includes("18:00")) return [12, 18];
+        if (label.includes("18:00") && label.includes("24:00")) return [18, 24];
+        return [0, 24];
+      });
+
+      result = result.filter((trip) => {
+        const date = new Date(trip.scheduledDepartureTime);
+        const hour = date.getHours();
+        return timeRanges.some(([start, end]) => {
+          // treat end=24 as inclusive of hours >= start
+          if (end === 24) return hour >= start && hour < 24;
+          return hour >= start && hour < end;
+        });
+      });
+    }
+
+    // Vehicle type / car types
+    if (selectedCarTypes.length > 0) {
+      result = result.filter((trip) =>
+        selectedCarTypes.some((t) =>
+          trip.vehicleType?.toLowerCase().includes(t.toLowerCase())
+        )
+      );
+    }
+
+    // Note: seatRows and floors are not part of TripResponse; no-op for now
+
+    if (onFilter) onFilter(result);
+  }, [selectedTimes, selectedCarTypes, selectedSeatRows, selectedFloors, initialTrips, onFilter]);
 
   const handleTimeChange = (label: string) => {
     setSelectedTimes((prev) =>
@@ -56,6 +114,7 @@ export default function SearchFilter() {
     setSelectedCarTypes([]);
     setSelectedSeatRows([]);
     setSelectedFloors([]);
+    if (onFilter) onFilter(initialTrips.slice());
   };
 
   return (

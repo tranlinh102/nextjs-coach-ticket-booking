@@ -1,5 +1,6 @@
 import SearchFilter from "@/components/features/TicketSearch/SearchFilter/SearchFilter";
 import SearchTicketForm from "@/components/features/TicketSearch/SearchForm/SearchTicketForm";
+import ClientSearchArea from "@/components/features/TicketSearch/ClientSearchArea";
 import { fetchProvinces } from "@/services/province.service";
 import { Province } from "@/type/province";
 import { LocationProvider } from "@/components/LocationProvider";
@@ -40,24 +41,11 @@ export default async function SearchPage({
     <div className="space-y-12">
       {/* Form tìm kiếm */}
       <LocationProvider value={filterProvinceList}>
-        <SearchTicketForm />
+        <SearchTicketForm startProvince={startProvince ?? null} endProvince={endProvince ?? null} />
       </LocationProvider>
 
-      <div className="max-w-7xl mx-auto py-10 px-4 grid grid-cols-1 md:grid-cols-[350px_1fr] gap-6 items-start">
-        {/* Bộ lọc */}
-        <SearchFilter />
-
-        {/* Kết quả */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">
-              {startProvinceName} – {endProvinceName}{" "}
-              <span className="text-gray-500">({trips.length})</span>
-            </h2>
-          </div>
-          <SearchResult trips={trips}/>
-        </div>
-      </div>
+      {/* Client-side filter + results (filtering happens on client from fetched trips) */}
+      <ClientSearchArea initialTrips={trips} />
     </div>
   );
 }
